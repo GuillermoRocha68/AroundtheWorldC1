@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Rocha’s English Class: Around the World in 80 Days</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lora', serif;
+            background-color: #f4f1ea; /* Parchment-like background */
+            color: #333;
+        }
+        h1, h2, h3, .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom styled date picker with a white icon */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+        .activity-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .activity-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .literary-box {
+            background-color: #fffdf8;
+            border: 1px solid #d4c5b0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .text-extract {
+            line-height: 2em;
+            padding: 1rem;
+            font-size: 1.05rem;
+            border-left: 4px solid #1e3a8a;
+        }
+        .correct-answer { border: 2px solid #22c55e !important; background-color: #f0fdf4 !important; }
+        .incorrect-answer { border: 2px solid #ef4444 !important; background-color: #fef2f2 !important; }
+        .feedback-text { font-size: 0.9rem; margin-top: 0.25rem; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header Section -->
+    <header class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 md:py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide">Mr. Rocha’s English Class</h1>
+                <p class="text-blue-200 text-sm md:text-base italic">Around the World in 80 Days</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <input type="text" id="studentName" placeholder="Student Name" class="px-3 py-2 rounded bg-blue-800 text-white placeholder-blue-300 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-48">
+                <input type="date" id="studentDate" class="px-3 py-2 rounded bg-blue-800 text-white border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-40">
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="w-full bg-blue-950 h-2">
+            <div id="progressBar" class="bg-amber-400 h-2 transition-all duration-500 ease-out" style="width: 10%;"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8 relative">
+        
+        <!-- Welcome Screen -->
+        <div id="act-0" class="activity-section active literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4 text-center">Welcome to the Journey!</h2>
+            <p class="text-lg text-gray-700 text-center mb-6">Please ensure you have entered your name and today's date in the top right corner before beginning.</p>
+            <div class="flex justify-center">
+                <img src="image1.jpg" onerror="this.src='https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'" alt="Vintage Map" class="rounded-lg shadow-md max-w-full h-auto object-cover max-h-64">
+            </div>
+            <p class="mt-6 text-center text-gray-600">Click <strong>Next</strong> to start Activity 1.</p>
+        </div>
+
+        <!-- Activity 1 -->
+        <div id="act-1" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 1: START THINKING ...</h2>
+            <p class="mb-4 font-bold">1 Work in pairs. Discuss the questions.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-800 mb-1">• Do you prefer to plan things carefully or be spontaneous?</label>
+                    <textarea class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none act1-input" rows="2"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-800 mb-1">• When people tell you something isn't possible, how do you react?</label>
+                    <textarea class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none act1-input" rows="2"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-800 mb-1">• If you could only take eight items of clothing with you on holiday, what would you take?</label>
+                    <textarea class="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none act1-input" rows="2"></textarea>
+                </div>
+            </div>
+            <div id="feedback-1" class="hidden mt-4 p-4 bg-blue-50 text-blue-900 rounded border border-blue-200">
+                <strong>Feedback:</strong> Great start! These questions are subjective and rely on your personal opinions. Thinking about these themes will help you understand Phileas Fogg's character.
+            </div>
+        </div>
+
+        <!-- Activity 2 -->
+        <div id="act-2" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 2: Setting the Scene</h2>
+            <div class="mb-6 flex justify-center">
+                <img src="image1.jpg" onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'" alt="Phileas Fogg Context" class="rounded shadow-md w-full max-w-2xl object-cover">
+            </div>
+            <p class="text-lg leading-relaxed bg-gray-50 p-6 rounded border border-gray-200">
+                Phileas Fogg is a rich man who spends a lot of time at the Reform Club, a club for wealthy gentlemen in London. One day, the men read a newspaper article that states that it is possible to travel around the world in 80 days. Mr Fogg says it is, and the other men challenge him to return in 80 days. If he is successful, he will win £20,000. He returns home and meets Passepartout, his servant.
+            </p>
+            <div id="feedback-2" class="hidden mt-4 p-4 bg-green-50 text-green-900 rounded border border-green-200">
+                <strong>Checked:</strong> You have reviewed the context successfully!
+            </div>
+        </div>
+
+        <!-- Activity 3 -->
+        <div id="act-3" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 3: Reading Extract</h2>
+            <div class="mb-6 bg-blue-900 p-4 rounded text-center shadow-inner text-white">
+                <p class="mb-2 text-sm">Listen along as you read the text.</p>
+                <audio controls class="mx-auto w-full max-w-md" src="audio1.mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            
+            <h3 class="text-xl font-bold mb-2">AROUND THE WORLD IN EIGHTY DAYS (1873) <span class="text-gray-600 text-lg font-normal">Jules Verne</span></h3>
+            
+            <div class="text-extract overflow-y-auto max-h-[60vh] pr-4 text-gray-800">
+                <p>Having won twenty guineas at whist, and taken leave of his friends, Phileas Fogg, at twenty-five minutes past seven, left the Reform Club.</p>
+                <p>Passepartout, who had conscientiously studied the programme of his duties, was more than surprised to see his master guilty of the inexactness of appearing at this unaccustomed hour; for, according to rule, he was not due in Saville Row until precisely midnight.</p>
+                <p>Mr Fogg repaired to his bedroom, and called out, 'Passepartout!'</p>
+                <p>Passepartout did not reply. It could not be he who was called; it was not the right hour.</p>
+                <p>'Passepartout!' repeated Mr Fogg, without raising his voice.</p>
+                <p>Passepartout made his appearance.</p>
+                <p>'I've called you twice,' observed his master.</p>
+                <p>'But it is not midnight,' responded the other, showing his watch.</p>
+                <p>'I know it; I don't blame you. We start for Dover and Calais in ten minutes.'</p>
+                <p>A puzzled grin overspread Passepartout's round face; clearly he had not comprehended his master.</p>
+                <p>'Monsieur is going to leave home?'</p>
+                <p>'Yes,' returned Phileas Fogg. 'We are going round the world.'</p>
+                <p>Passepartout opened wide his eyes, raised his eyebrows, held up his hands, and seemed about to collapse, so overcome was he with stupefied astonishment.</p>
+                <p>'Round the world!' he murmured.</p>
+                <p>'In eighty days,' responded Mr Fogg. 'So we haven't a moment to lose.'</p>
+                <p>'But the trunks?' gasped Passepartout, unconsciously swaying his head from right to left.</p>
+                <p>'We'll have no trunks; only a carpet-bag, with two shirts and three pairs of stockings for me, and the same for you. We'll buy our clothes on the way. Bring down my mackintosh and travelling-cloak, and some stout shoes, though we shall do little walking. Make haste!'</p>
+                <p>Passepartout tried to reply, but could not. He went out, mounted to his own room, fell into a chair, and muttered: 'That's good, that is! And I, who wanted to remain quiet!'</p>
+                <p>He mechanically set about making the preparations for departure. Around the world in eighty days! Was his master a fool? No. Was this a joke, then? They were going to Dover; good! To Calais; good again! After all, Passepartout, who had been away from France five years, would not be sorry to set foot on his native soil again. Perhaps they would go as far as Paris, and it would do his eyes good to see Paris once more. But surely a gentleman so chary of his steps would stop there; no doubt—but, then, it was none the less true that he was going away, this so domestic person hitherto!</p>
+                <p>By eight o'clock Passepartout had packed the modest carpet-bag, containing the wardrobes of his master and himself; then, still troubled in mind, he carefully shut the door of his room, and descended to Mr Fogg.</p>
+                <p>Mr Fogg was quite ready. Under his arm might have been observed a red-bound copy of Bradshaw's Continental Railway Steam Transit and General Guide, with its timetables showing the arrival and departure of steamers and railways. He took the carpet-bag, opened it, and slipped into it a goodly roll of Bank of England notes, which would pass wherever he might go.</p>
+                <p>'You have forgotten nothing?' asked he.</p>
+                <p>'Nothing, monsieur.'</p>
+                <p>'My mackintosh and cloak?'</p>
+                <p>'Here they are.'</p>
+                <p>'Good! Take this carpet-bag,' handing it to Passepartout. 'Take good care of it, for there are twenty thousand pounds in it.'</p>
+                <p>Passepartout nearly dropped the bag, as if the twenty thousand pounds were in gold, and weighed him down.</p>
+                <p>Master and man then descended, the street-door was double-locked, and at the end of Saville Row they took a cab and drove rapidly to Charing Cross. The cab stopped before the railway station at twenty minutes past eight. Passepartout jumped off the box and followed his master, who, after paying the cabman, was about to enter the station, when a poor beggar-woman, with a child in her arms, her naked feet smeared with mud, her head covered with a wretched bonnet, from which hung a tattered feather, and her shoulders shrouded in a ragged shawl, approached, and mournfully asked for alms.</p>
+                <p>Mr Fogg took out the twenty guineas he had just won at whist, and handed them to the beggar, saying, 'Here, my good woman. I'm glad that I met you;' and passed on.</p>
+                <p>Passepartout had a moist sensation about the eyes; his master's action touched his susceptible heart.</p>
+                <p>Two first-class tickets for Paris having been speedily purchased, Mr Fogg was crossing the station to the train, when he perceived his five friends of the Reform.</p>
+                <p>'Well, gentlemen,' said he, 'I'm off, you see; and, if you will examine my passport when I get back, you will be able to judge whether I have accomplished the journey agreed upon.'</p>
+                <p>'Oh, that would be quite unnecessary, Mr Fogg,' said Ralph politely. 'We will trust your word, as a gentleman of honour.'</p>
+                <p>'You do not forget when you are due in London again?' asked Stuart.</p>
+                <p>'In eighty days; on Saturday, the 21st of December, 1872, at a quarter before nine p.m. Good-bye, gentlemen.'</p>
+                <p>Phileas Fogg and his servant seated themselves in a first-class carriage at twenty minutes before nine; five minutes later the whistle screamed, and the train slowly glided out of the station.</p>
+                <p>The night was dark, and a fine, steady rain was falling. Phileas Fogg, snugly ensconced in his corner, did not open his lips. Passepartout, not yet recovered from his stupefaction, clung mechanically to the carpet-bag, with its enormous treasure.</p>
+                <p>Just as the train was whirling through Sydenham, Passepartout suddenly uttered a cry of despair.</p>
+                <p>'What's the matter?' asked Mr Fogg.</p>
+                <p>'Alas! In my hurry—I—I forgot—'</p>
+                <p>'What?'</p>
+                <p>'To turn off the gas in my room!'</p>
+                <p>'Very well, young man,' returned Mr Fogg, coolly; 'it will burn—at your expense.'</p>
+            </div>
+            <div id="feedback-3" class="hidden mt-4 p-4 bg-green-50 text-green-900 rounded border border-green-200">
+                <strong>Checked:</strong> Reading completed. Please proceed to the glossary activity.
+            </div>
+        </div>
+
+        <!-- Activity 4 -->
+        <div id="act-4" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 4: Glossary Matching</h2>
+            <p class="mb-4">Match the definitions with the words in bold in the text.</p>
+            <div class="grid grid-cols-1 gap-3 text-sm md:text-base" id="act4-container">
+                <!-- Selects generated via JS to keep HTML clean, see script below -->
+            </div>
+            <div id="feedback-4" class="hidden mt-4 p-4 rounded text-center font-bold"></div>
+        </div>
+
+        <!-- Activity 5 -->
+        <div id="act-5" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 5: Comprehension</h2>
+            
+            <button onclick="toggleVisibility('act5-text')" class="mb-4 bg-blue-800 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow">
+                Show/Hide Story Text
+            </button>
+            <div id="act5-text" class="hidden mb-6 text-extract text-sm text-gray-700 h-64 overflow-y-auto">
+                <p class="italic text-gray-500 mb-2">Scroll to read the text again...</p>
+                <p>Having won twenty guineas at whist, and taken leave of his friends, Phileas Fogg, at twenty-five minutes past seven, left the Reform Club.</p>
+                <p>Passepartout, who had conscientiously studied the programme of his duties, was more than surprised to see his master guilty of the inexactness of appearing at this unaccustomed hour; for, according to rule, he was not due in Saville Row until precisely midnight.</p>
+                <p>Mr Fogg repaired to his bedroom, and called out, 'Passepartout!'</p>
+                <p>Passepartout did not reply. It could not be he who was called; it was not the right hour.</p>
+                <p>'Passepartout!' repeated Mr Fogg, without raising his voice.</p>
+                <p>Passepartout made his appearance.</p>
+                <p>'I've called you twice,' observed his master.</p>
+                <p>'But it is not midnight,' responded the other, showing his watch.</p>
+                <p>'I know it; I don't blame you. We start for Dover and Calais in ten minutes.'</p>
+                <p>A puzzled grin overspread Passepartout's round face; clearly he had not comprehended his master.</p>
+                <p>'Monsieur is going to leave home?'</p>
+                <p>'Yes,' returned Phileas Fogg. 'We are going round the world.'</p>
+                <p>Passepartout opened wide his eyes, raised his eyebrows, held up his hands, and seemed about to collapse, so overcome was he with stupefied astonishment.</p>
+                <p>'Round the world!' he murmured.</p>
+                <p>'In eighty days,' responded Mr Fogg. 'So we haven't a moment to lose.'</p>
+                <p>'But the trunks?' gasped Passepartout, unconsciously swaying his head from right to left.</p>
+                <p>'We'll have no trunks; only a carpet-bag, with two shirts and three pairs of stockings for me, and the same for you. We'll buy our clothes on the way. Bring down my mackintosh and travelling-cloak, and some stout shoes, though we shall do little walking. Make haste!'</p>
+                <p>Passepartout tried to reply, but could not. He went out, mounted to his own room, fell into a chair, and muttered: 'That's good, that is! And I, who wanted to remain quiet!'</p>
+                <p>He mechanically set about making the preparations for departure. Around the world in eighty days! Was his master a fool? No. Was this a joke, then? They were going to Dover; good! To Calais; good again! After all, Passepartout, who had been away from France five years, would not be sorry to set foot on his native soil again. Perhaps they would go as far as Paris, and it would do his eyes good to see Paris once more. But surely a gentleman so chary of his steps would stop there; no doubt—but, then, it was none the less true that he was going away, this so domestic person hitherto!</p>
+                <p>By eight o'clock Passepartout had packed the modest carpet-bag, containing the wardrobes of his master and himself; then, still troubled in mind, he carefully shut the door of his room, and descended to Mr Fogg.</p>
+                <p>Mr Fogg was quite ready. Under his arm might have been observed a red-bound copy of Bradshaw's Continental Railway Steam Transit and General Guide, with its timetables showing the arrival and departure of steamers and railways. He took the carpet-bag, opened it, and slipped into it a goodly roll of Bank of England notes, which would pass wherever he might go.</p>
+                <p>'You have forgotten nothing?' asked he.</p>
+                <p>'Nothing, monsieur.'</p>
+                <p>'My mackintosh and cloak?'</p>
+                <p>'Here they are.'</p>
+                <p>'Good! Take this carpet-bag,' handing it to Passepartout. 'Take good care of it, for there are twenty thousand pounds in it.'</p>
+                <p>Passepartout nearly dropped the bag, as if the twenty thousand pounds were in gold, and weighed him down.</p>
+                <p>Master and man then descended, the street-door was double-locked, and at the end of Saville Row they took a cab and drove rapidly to Charing Cross. The cab stopped before the railway station at twenty minutes past eight. Passepartout jumped off the box and followed his master, who, after paying the cabman, was about to enter the station, when a poor beggar-woman, with a child in her arms, her naked feet smeared with mud, her head covered with a wretched bonnet, from which hung a tattered feather, and her shoulders shrouded in a ragged shawl, approached, and mournfully asked for alms.</p>
+                <p>Mr Fogg took out the twenty guineas he had just won at whist, and handed them to the beggar, saying, 'Here, my good woman. I'm glad that I met you;' and passed on.</p>
+                <p>Passepartout had a moist sensation about the eyes; his master's action touched his susceptible heart.</p>
+                <p>Two first-class tickets for Paris having been speedily purchased, Mr Fogg was crossing the station to the train, when he perceived his five friends of the Reform.</p>
+                <p>'Well, gentlemen,' said he, 'I'm off, you see; and, if you will examine my passport when I get back, you will be able to judge whether I have accomplished the journey agreed upon.'</p>
+                <p>'Oh, that would be quite unnecessary, Mr Fogg,' said Ralph politely. 'We will trust your word, as a gentleman of honour.'</p>
+                <p>'You do not forget when you are due in London again?' asked Stuart.</p>
+                <p>'In eighty days; on Saturday, the 21st of December, 1872, at a quarter before nine p.m. Good-bye, gentlemen.'</p>
+                <p>Phileas Fogg and his servant seated themselves in a first-class carriage at twenty minutes before nine; five minutes later the whistle screamed, and the train slowly glided out of the station.</p>
+                <p>The night was dark, and a fine, steady rain was falling. Phileas Fogg, snugly ensconced in his corner, did not open his lips. Passepartout, not yet recovered from his stupefaction, clung mechanically to the carpet-bag, with its enormous treasure.</p>
+                <p>Just as the train was whirling through Sydenham, Passepartout suddenly uttered a cry of despair.</p>
+                <p>'What's the matter?' asked Mr Fogg.</p>
+                <p>'Alas! In my hurry—I—I forgot—'</p>
+                <p>'What?'</p>
+                <p>'To turn off the gas in my room!'</p>
+                <p>'Very well, young man,' returned Mr Fogg, coolly; 'it will burn—at your expense.'</p>
+            </div>
+
+            <p class="mb-4 font-bold text-lg">Read the text again. Answer the questions.</p>
+            <div class="space-y-4" id="act5-container">
+                <!-- Inputs generated via JS -->
+            </div>
+            <div id="feedback-5" class="hidden mt-4 p-4 rounded text-center font-bold"></div>
+        </div>
+
+        <!-- Activity 6 -->
+        <div id="act-6" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 6: Read Between The Lines</h2>
+            <p class="mb-4">Answer the questions. Give reasons and examples from the text.</p>
+            <div class="space-y-4">
+                <div class="act6-item">
+                    <label class="block font-semibold mb-1">1. How important does Mr Fogg think it is to be on time? How do you know?</label>
+                    <textarea class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none act6-input" rows="2"></textarea>
+                    <div class="hidden text-green-700 mt-1 text-sm suggested-answer"><strong>Suggested Answer:</strong> It is very important. Throughout the extract there are references to time, for example 'according to rule, he was not due in Saville Row until precisely midnight'.</div>
+                </div>
+                <div class="act6-item">
+                    <label class="block font-semibold mb-1">2. How does Passepartout put Mr Fogg's needs above his own?</label>
+                    <textarea class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none act6-input" rows="2"></textarea>
+                    <div class="hidden text-green-700 mt-1 text-sm suggested-answer"><strong>Suggested Answer:</strong> Passepartout wants to lead a quiet life ('That’s good, that is! And I, who wanted to remain quiet!') but immediately helps Mr Fogg to prepare for the journey even though he would prefer not to go.</div>
+                </div>
+                <div class="act6-item">
+                    <label class="block font-semibold mb-1">3. What does Passepartout think of Mr Fogg's attitude to charity?</label>
+                    <textarea class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none act6-input" rows="2"></textarea>
+                    <div class="hidden text-green-700 mt-1 text-sm suggested-answer"><strong>Suggested Answer:</strong> He approves and 'had a moist sensation about the eyes; his master’s action touched his susceptible heart'.</div>
+                </div>
+                <div class="act6-item">
+                    <label class="block font-semibold mb-1">4. What does Mr Fogg's reaction to the gas being left on tell us about his attitude to money?</label>
+                    <textarea class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none act6-input" rows="2"></textarea>
+                    <div class="hidden text-green-700 mt-1 text-sm suggested-answer"><strong>Suggested Answer:</strong> He is careful with money and says 'it will burn—at your expense.'</div>
+                </div>
+            </div>
+            <div id="feedback-6" class="hidden mt-4 p-4 bg-blue-50 text-blue-900 rounded border border-blue-200">
+                <strong>Feedback:</strong> Review the suggested answers provided below your responses.
+            </div>
+        </div>
+
+        <!-- Activity 7 -->
+        <div id="act-7" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 7: Vocabulary</h2>
+            <p class="mb-4">Complete the sentences with the correct words from the glossary in the correct form.</p>
+            <div class="space-y-4" id="act7-container">
+                <!-- Inputs generated via JS -->
+            </div>
+            <div id="feedback-7" class="hidden mt-4 p-4 rounded text-center font-bold"></div>
+        </div>
+
+        <!-- Activity 8 -->
+        <div id="act-8" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 8: Listening Part 1</h2>
+            <div class="mb-6 bg-blue-900 p-4 rounded text-center shadow-inner text-white">
+                <p class="mb-2 text-sm">Listen to the next part of the story in which Detective Fix, who believes Mr Fogg is a bank robber, offers him help.</p>
+                <audio controls class="mx-auto w-full max-w-md" src="audio2.mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <p class="mb-4 font-bold">Put the words in the order you hear them. (Select 1 to 6). There are two words that you do not hear (leave blank).</p>
+            <div class="grid grid-cols-2 gap-4 max-w-lg" id="act8-container">
+                <!-- Dropdowns generated via JS -->
+            </div>
+            <div id="feedback-8" class="hidden mt-4 p-4 rounded text-center font-bold"></div>
+        </div>
+
+        <!-- Activity 9 -->
+        <div id="act-9" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 9: Listening Part 2</h2>
+            <p class="mb-4 font-bold">Listen again. Mark the sentences T (true), F (false) or DS (doesn't say).</p>
+            <div class="space-y-3" id="act9-container">
+                <!-- Dropdowns generated via JS -->
+            </div>
+            <div id="feedback-9" class="hidden mt-4 p-4 rounded text-center font-bold"></div>
+        </div>
+
+        <!-- Activity 10 -->
+        <div id="act-10" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2 border-b-2 border-amber-400 pb-2">Activity 10: Writing</h2>
+            <p class="mb-2 font-bold text-lg">A travel journal entry</p>
+            <p class="mb-4">Imagine you are either Passepartout or Mr Fogg. You are writing a travel journal entry on the train. Write 220–260 words.</p>
+            <ul class="list-disc pl-5 mb-4 space-y-1 text-gray-700">
+                <li><strong>Paragraph 1:</strong> Describe your surroundings. Where are you on the train? What is it like? Who are you with? Is there anyone else there? Is it busy or quiet? What is the weather like?</li>
+                <li><strong>Paragraph 2:</strong> Say what has happened today and explain why you are on the train. Describe the events in detail.</li>
+                <li><strong>Paragraph 3:</strong> Explain what you think is going to happen in the next 24 hours.</li>
+            </ul>
+            
+            <textarea id="act10-input" class="w-full p-4 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none min-h-[200px] mb-4" placeholder="Start writing your journal entry here..."></textarea>
+            
+            <button onclick="toggleVisibility('act10-example')" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded shadow mb-4 transition">
+                Show/Hide Example Answer
+            </button>
+            
+            <div id="act10-example" class="hidden p-6 bg-yellow-50 border border-yellow-200 rounded text-sm text-gray-800 font-serif leading-relaxed">
+                <h4 class="font-bold text-lg mb-2">Journal Entry: Phileas Fogg</h4>
+                <p class="italic mb-4">Date: 22nd October 1872</p>
+                <p class="mb-3">I am currently situated in a first-class compartment of the Great Indian Peninsula Railway, hurtling steadily towards Calcutta. The carriage is adequately appointed, though rattling with a rhythmic persistence that defies true comfort. Opposite me sits my newly acquired valet, Passepartout, whose restless disposition contrasts starkly with the tranquil solitude of our enclosed quarters. We are the sole occupants of this compartment; the corridor beyond remains undisturbed, save for the occasional, muffled tread of a conductor. Beyond the soot-stained glass, an oppressive monsoon rain lashes the vibrant Indian countryside, blurring the verdant landscape into a monotonous streak of grey and green.</p>
+                <p class="mb-3">The exigency of this journey stems from a wager undertaken at the Reform Club merely days prior—a commitment to circumnavigate the globe in precisely eighty days. Today’s embarkation from Bombay commenced smoothly, despite a minor altercation involving Passepartout at a local pagoda, an indiscretion that momentarily threatened to delay our meticulous itinerary. Having secured our passage just as the locomotive’s whistle signaled its imminent departure, we swiftly boarded, exchanging the bustling, spice-scented chaos of the Bombay terminus for the predictable locomotion of the train. Every minute is accounted for, and this railway leg is a critical artery connecting us to the steamer awaiting us on the eastern coast.</p>
+                <p>Looking ahead to the ensuing twenty-four hours, I anticipate our arrival at the terminus of this railway line, whereupon we shall seamlessly transfer to our next vessel. Assuming the timetable remains accurate, as probability suggests, we will confront no significant impediments. However, I must remain vigilant against unforeseen logistical anomalies. My rigorous calculations allocate no margin for error, and any unexpected disruption to the locomotive's progress will necessitate swift, calculated recalibration to ensure the wager's success remains thoroughly uncompromised.</p>
+            </div>
+            <div id="feedback-10" class="hidden mt-4 p-4 bg-blue-50 text-blue-900 rounded border border-blue-200">
+                <strong>Checked:</strong> Excellent work completing the creative writing section! Click Submit below to view your results.
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="results-section" class="activity-section literary-box p-6 md:p-10 rounded-lg">
+            <h2 class="text-3xl font-bold text-blue-900 mb-6 text-center border-b-4 border-amber-400 pb-2 inline-block">Final Report Card</h2>
+            
+            <div class="text-center mb-8">
+                <p class="text-lg">Student: <span id="res-name" class="font-bold text-blue-800"></span></p>
+                <p class="text-lg">Date: <span id="res-date" class="font-bold text-blue-800"></span></p>
+                <div class="mt-4 text-5xl font-extrabold" id="res-score-display"></div>
+                <p id="res-feedback-msg" class="mt-2 text-xl font-serif italic text-gray-600"></p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-4 rounded shadow border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Performance Breakdown</h3>
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                
+                <div class="bg-amber-50 p-6 rounded shadow border border-amber-200">
+                    <h3 class="text-xl font-bold text-blue-900 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                        Teacher's Recommendations
+                    </h3>
+                    <ul id="recommendations-list" class="list-decimal pl-5 space-y-2 text-gray-800 text-sm md:text-base">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="mt-8 flex flex-wrap justify-between items-center gap-4 bg-white p-4 rounded-lg shadow border border-gray-200 sticky bottom-4 z-40">
+            <button id="btn-prev" onclick="nav(-1)" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition hidden">
+                &larr; Previous Activity
+            </button>
+            <div class="flex gap-2">
+                <button id="btn-check" onclick="checkAnswers()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded transition shadow-lg">
+                    Check Answers
+                </button>
+                <button id="btn-submit" onclick="submitWorksheet()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded transition shadow-lg hidden">
+                    Submit Worksheet
+                </button>
+            </div>
+            <button id="btn-next" onclick="nav(1)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition shadow-lg">
+                Next Activity &rarr;
+            </button>
+        </div>
+
+    </main>
+
+    <script>
+        // --- DATA & STATE ---
+        const totalActivities = 10;
+        let currentAct = 0; // 0 is Welcome, 1-10 are activities, 11 is results
+        const state = {
+            scores: { act4: 0, act5: 0, act7: 0, act8: 0, act9: 0 },
+            maxScores: { act4: 10, act5: 6, act7: 6, act8: 6, act9: 6 },
+            locked: {}
+        };
+
+        const answersData = {
+            act4: [
+                { q: "1. clothing, food, or money that is given to poor people", a: "alms" },
+                { q: "2. to be surprised or shocked by something", a: "stupefied" },
+                { q: "3. unable to act or think in the usual way", a: "overcome" },
+                { q: "4. a poor person who lives by asking others for money or food", a: "beggar" },
+                { q: "5. a large, strong container that is used for storing clothes and personal possessions...", a: "trunk" },
+                { q: "6. made from thick, strong materials", a: "stout" },
+                { q: "7. worried or nervous", a: "troubled" },
+                { q: "8. having a cover made of paper, leather, or other material", a: "bound" },
+                { q: "9. not usual", a: "unaccustomed" },
+                { q: "10. not large in size or amount, or not expensive", a: "modest" }
+            ],
+            glossaryWords: ["alms", "stupefied", "overcome", "beggar", "trunk", "stout", "troubled", "bound", "unaccustomed", "modest"].sort(),
+            
+            act5: [
+                { q: "1. How does Passepartout react when he learns about the journey?", regex: /(astonish|shock|unhappy|surprise|stupefied|overcome)/i, ans: "He was astonished / shocked / unhappy." },
+                { q: "2. Which city would he most like to see?", regex: /paris/i, ans: "Paris." },
+                { q: "3. Which methods of transport is Mr Fogg planning on taking in Europe?", regex: /(steam|boat|ship).*?(train|rail)|(train|rail).*?(steam|boat|ship)/i, ans: "Steamers (boats) and trains." },
+                { q: "4. How long is the journey from the house to the train station?", regex: /(20|twenty)/i, ans: "20 minutes." },
+                { q: "5. What do we learn about Mr Fogg's character from his friends from the Reform Club?", regex: /(trust|honour|honor|word)/i, ans: "He’s trustworthy (a gentleman of honour)." },
+                { q: "6. What time does the train leave Charing Cross?", regex: /(8:45|eight forty.*five|quarter before nine)/i, ans: "Eight forty-five (a quarter before nine p.m.)." }
+            ],
+
+            act7: [
+                { pre: "1. The first edition of Around the World in Eighty Days was written in French and", post: "in red leather.", a: "bound" },
+                { pre: "2. Although asking for money on the street is illegal in Britain,", post: "are not sent to prison if caught.", a: "beggars" },
+                { pre: "3.", post: "containing unusual items such as rabbit skins and car parts were lost when the Titanic sank.", a: "Trunks" },
+                { pre: "4. People were", post: "with emotion when Queen Victoria died in 1901.", a: "overcome" },
+                { pre: "5. The giving of", post: "and helping people who are not fortunate is common to all major religions.", a: "alms" },
+                { pre: "6. Films such as Mary Poppins and Notting Hill give the impression that English people all live in large houses; the truth is that most houses are a lot more", post: ".", a: "modest" }
+            ],
+
+            act8: [
+                "sledge", "instantly", "steamer", "mast", "plains", "regain", "impossible", "superior"
+            ],
+            act8Answers: { "steamer": "1", "regain": "2", "sledge": "3", "mast": "4", "plains": "5", "superior": "6" },
+
+            act9: [
+                { q: "1. Passepartout wanted to stop Mr Fogg from completing the challenge.", a: "F" },
+                { q: "2. The steamer is in New York right now.", a: "DS" },
+                { q: "3. Mr Fix suggests that Mr Fogg walk to New York.", a: "F" },
+                { q: "4. Fix spoke to a man about the sledge the night before.", a: "T" },
+                { q: "5. The trains from Omaha to Chicago and New York are infrequent.", a: "F" },
+                { q: "6. The trains don't travel at night.", a: "DS" }
+            ]
+        };
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            generateDOM();
+            updateUI();
+        };
+
+        function generateDOM() {
+            // Act 4
+            const act4Cont = document.getElementById('act4-container');
+            answersData.act4.forEach((item, i) => {
+                let options = `<option value="">-- Select Word --</option>`;
+                answersData.glossaryWords.forEach(w => options += `<option value="${w}">${w}</option>`);
+                act4Cont.innerHTML += `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white p-3 rounded border border-gray-200">
+                        <span class="mb-2 sm:mb-0 sm:w-3/4">${item.q}</span>
+                        <select id="act4-q${i}" class="p-2 border rounded focus:ring-2 focus:ring-blue-500 bg-gray-50 act4-input">
+                            ${options}
+                        </select>
+                    </div>`;
+            });
+
+            // Act 5
+            const act5Cont = document.getElementById('act5-container');
+            answersData.act5.forEach((item, i) => {
+                act5Cont.innerHTML += `
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <label class="block mb-2 font-semibold text-gray-800">${item.q}</label>
+                        <input type="text" id="act5-q${i}" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 act5-input" placeholder="Type your answer...">
+                        <div id="act5-feedback${i}" class="hidden text-sm mt-2"></div>
+                    </div>`;
+            });
+
+            // Act 7
+            const act7Cont = document.getElementById('act7-container');
+            answersData.act7.forEach((item, i) => {
+                act7Cont.innerHTML += `
+                    <div class="leading-loose text-lg">
+                        ${item.pre} <input type="text" id="act7-q${i}" class="border-b-2 border-gray-400 focus:border-blue-500 outline-none text-center w-32 px-2 mx-1 act7-input" placeholder="..."> ${item.post}
+                    </div>`;
+            });
+
+            // Act 8
+            const act8Cont = document.getElementById('act8-container');
+            answersData.act8.forEach((word, i) => {
+                act8Cont.innerHTML += `
+                    <div class="flex items-center justify-between bg-white p-2 rounded border border-gray-200">
+                        <span class="font-semibold text-gray-700 uppercase tracking-wide ml-2">${word}</span>
+                        <select id="act8-q${word}" class="p-1 border rounded w-16 text-center act8-input">
+                            <option value="">-</option>
+                            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                        </select>
+                    </div>`;
+            });
+
+            // Act 9
+            const act9Cont = document.getElementById('act9-container');
+            answersData.act9.forEach((item, i) => {
+                act9Cont.innerHTML += `
+                    <div class="flex justify-between items-center bg-white p-3 rounded border border-gray-200">
+                        <span class="w-3/4">${item.q}</span>
+                        <select id="act9-q${i}" class="p-2 border rounded act9-input w-20">
+                            <option value="">--</option>
+                            <option value="T">T</option>
+                            <option value="F">F</option>
+                            <option value="DS">DS</option>
+                        </select>
+                    </div>`;
+            });
+        }
+
+        // --- NAVIGATION & UI ---
+        function nav(dir) {
+            currentAct += dir;
+            if (currentAct < 0) currentAct = 0;
+            if (currentAct > 11) currentAct = 11; // 11 is results
+            updateUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateUI() {
+            // Hide all
+            document.querySelectorAll('.activity-section').forEach(el => el.classList.remove('active'));
+            // Show current
+            if (currentAct <= totalActivities) {
+                document.getElementById(`act-${currentAct}`).classList.add('active');
+            } else {
+                document.getElementById('results-section').classList.add('active');
+            }
+
+            // Progress Bar
+            const prog = currentAct <= totalActivities ? (currentAct / totalActivities) * 100 : 100;
+            document.getElementById('progressBar').style.width = `${prog}%`;
+
+            // Buttons
+            document.getElementById('btn-prev').classList.toggle('hidden', currentAct === 0 || currentAct > totalActivities);
+            
+            const btnCheck = document.getElementById('btn-check');
+            const btnNext = document.getElementById('btn-next');
+            const btnSubmit = document.getElementById('btn-submit');
+
+            if (currentAct === 0 || currentAct > totalActivities) {
+                btnCheck.classList.add('hidden');
+            } else {
+                btnCheck.classList.remove('hidden');
+                // Change style if locked
+                if (state.locked[currentAct]) {
+                    btnCheck.innerText = "Answers Checked";
+                    btnCheck.classList.replace('bg-amber-500', 'bg-gray-400');
+                    btnCheck.classList.replace('hover:bg-amber-600', 'hover:bg-gray-500');
+                    btnCheck.disabled = true;
+                } else {
+                    btnCheck.innerText = "Check Answers";
+                    btnCheck.classList.replace('bg-gray-400', 'bg-amber-500');
+                    btnCheck.classList.replace('hover:bg-gray-500', 'hover:bg-amber-600');
+                    btnCheck.disabled = false;
+                }
+            }
+
+            if (currentAct === totalActivities) {
+                btnNext.classList.add('hidden');
+                btnSubmit.classList.remove('hidden');
+            } else if (currentAct > totalActivities) {
+                btnNext.classList.add('hidden');
+                btnSubmit.classList.add('hidden');
+                btnCheck.classList.add('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+                btnSubmit.classList.add('hidden');
+            }
+        }
+
+        function toggleVisibility(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                el.style.animation = 'fadeIn 0.3s ease-in-out';
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+
+        // --- GRADING LOGIC ---
+        function checkAnswers() {
+            if (state.locked[currentAct]) return;
+            state.locked[currentAct] = true;
+            
+            let fbId = `feedback-${currentAct}`;
+            let fbEl = document.getElementById(fbId);
+            if (fbEl) fbEl.classList.remove('hidden');
+
+            switch(currentAct) {
+                case 1:
+                    lockInputs('.act1-input');
+                    break;
+                case 2:
+                    // Just reading
+                    break;
+                case 3:
+                    // Just reading
+                    break;
+                case 4:
+                    let score4 = 0;
+                    answersData.act4.forEach((item, i) => {
+                        let el = document.getElementById(`act4-q${i}`);
+                        el.disabled = true;
+                        if (el.value.toLowerCase() === item.a.toLowerCase()) {
+                            el.classList.add('correct-answer');
+                            score4++;
+                        } else {
+                            el.classList.add('incorrect-answer');
+                            // Add correct answer label
+                            let span = document.createElement('span');
+                            span.innerHTML = ` (Correct: ${item.a})`;
+                            span.className = "text-red-600 text-xs font-bold ml-2";
+                            el.parentNode.appendChild(span);
+                        }
+                    });
+                    state.scores.act4 = score4;
+                    showObjFeedback(fbEl, score4, state.maxScores.act4);
+                    break;
+                case 5:
+                    let score5 = 0;
+                    answersData.act5.forEach((item, i) => {
+                        let el = document.getElementById(`act5-q${i}`);
+                        let fb = document.getElementById(`act5-feedback${i}`);
+                        el.disabled = true;
+                        fb.classList.remove('hidden');
+                        if (item.regex.test(el.value)) {
+                            el.classList.add('correct-answer');
+                            fb.innerHTML = `<span class="text-green-600 font-bold">✓ Great job!</span>`;
+                            score5++;
+                        } else {
+                            el.classList.add('incorrect-answer');
+                            fb.innerHTML = `<span class="text-red-600 font-bold">✗ Suggested:</span> ${item.ans}`;
+                        }
+                    });
+                    state.scores.act5 = score5;
+                    showObjFeedback(fbEl, score5, state.maxScores.act5);
+                    break;
+                case 6:
+                    lockInputs('.act6-input');
+                    document.querySelectorAll('.suggested-answer').forEach(el => el.classList.remove('hidden'));
+                    break;
+                case 7:
+                    let score7 = 0;
+                    answersData.act7.forEach((item, i) => {
+                        let el = document.getElementById(`act7-q${i}`);
+                        el.disabled = true;
+                        if (el.value.trim().toLowerCase() === item.a.toLowerCase()) {
+                            el.classList.add('correct-answer');
+                            score7++;
+                        } else {
+                            el.classList.add('incorrect-answer');
+                            el.value = el.value + ` (${item.a})`; // Show correct in field
+                        }
+                    });
+                    state.scores.act7 = score7;
+                    showObjFeedback(fbEl, score7, state.maxScores.act7);
+                    break;
+                case 8:
+                    let score8 = 0;
+                    answersData.act8.forEach(word => {
+                        let el = document.getElementById(`act8-q${word}`);
+                        el.disabled = true;
+                        let correctVal = answersData.act8Answers[word] || "";
+                        if (el.value === correctVal) {
+                            el.classList.add('correct-answer');
+                            if(correctVal !== "") score8++; 
+                        } else {
+                            el.classList.add('incorrect-answer');
+                            let span = document.createElement('span');
+                            span.innerHTML = ` (Ans: ${correctVal || "Blank"})`;
+                            span.className = "text-red-600 text-xs font-bold block mt-1";
+                            el.parentNode.appendChild(span);
+                        }
+                    });
+                    // Only 6 scored items
+                    state.scores.act8 = score8;
+                    showObjFeedback(fbEl, score8, state.maxScores.act8);
+                    break;
+                case 9:
+                    let score9 = 0;
+                    answersData.act9.forEach((item, i) => {
+                        let el = document.getElementById(`act9-q${i}`);
+                        el.disabled = true;
+                        if (el.value === item.a) {
+                            el.classList.add('correct-answer');
+                            score9++;
+                        } else {
+                            el.classList.add('incorrect-answer');
+                            let span = document.createElement('span');
+                            span.innerHTML = ` (Correct: ${item.a})`;
+                            span.className = "text-red-600 text-xs font-bold ml-2";
+                            el.parentNode.appendChild(span);
+                        }
+                    });
+                    state.scores.act9 = score9;
+                    showObjFeedback(fbEl, score9, state.maxScores.act9);
+                    break;
+                case 10:
+                    lockInputs('#act10-input');
+                    document.getElementById('act10-example').classList.remove('hidden');
+                    break;
+            }
+            updateUI(); // refresh button state
+        }
+
+        function lockInputs(selector) {
+            document.querySelectorAll(selector).forEach(el => el.disabled = true);
+        }
+
+        function showObjFeedback(el, score, max) {
+            el.className = "mt-4 p-4 rounded text-center font-bold text-lg ";
+            if (score === max) {
+                el.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-300');
+                el.innerText = `Perfect! Score: ${score}/${max}`;
+            } else if (score >= max / 2) {
+                el.classList.add('bg-yellow-100', 'text-yellow-800', 'border', 'border-yellow-300');
+                el.innerText = `Good attempt. Score: ${score}/${max}`;
+            } else {
+                el.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-300');
+                el.innerText = `Keep practicing! Score: ${score}/${max}`;
+            }
+        }
+
+        // --- SUBMIT & RESULTS ---
+        function submitWorksheet() {
+            // Auto check any unlocked activities to ensure grading is complete
+            for (let i=1; i<=10; i++) {
+                if(!state.locked[i]) {
+                    currentAct = i;
+                    checkAnswers();
+                }
+            }
+            
+            nav(1); // Go to results
+
+            const name = document.getElementById('studentName').value || "Adventurous Scholar";
+            const date = document.getElementById('studentDate').value || new Date().toLocaleDateString();
+            
+            document.getElementById('res-name').innerText = name;
+            document.getElementById('res-date').innerText = date;
+
+            let totalAchieved = state.scores.act4 + state.scores.act5 + state.scores.act7 + state.scores.act8 + state.scores.act9;
+            let totalPossible = state.maxScores.act4 + state.maxScores.act5 + state.maxScores.act7 + state.maxScores.act8 + state.maxScores.act9;
+            let percentage = Math.round((totalAchieved / totalPossible) * 100);
+
+            let disp = document.getElementById('res-score-display');
+            let msg = document.getElementById('res-feedback-msg');
+            disp.innerText = `${percentage}%`;
+
+            if (percentage >= 90) {
+                disp.className = "mt-4 text-5xl font-extrabold text-green-600";
+                msg.innerText = "Outstanding! A true gentleman of honour and wit.";
+            } else if (percentage >= 70) {
+                disp.className = "mt-4 text-5xl font-extrabold text-amber-500";
+                msg.innerText = "Well done! A solid journey around the globe.";
+            } else {
+                disp.className = "mt-4 text-5xl font-extrabold text-red-500";
+                msg.innerText = "A bumpy ride. Review the itinerary and try again!";
+            }
+
+            renderChart();
+            generateRecommendations(percentage);
+        }
+
+        function renderChart() {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            
+            // Convert scores to percentages for chart fairness
+            const dataPcts = [
+                (state.scores.act4 / state.maxScores.act4) * 100,
+                (state.scores.act5 / state.maxScores.act5) * 100,
+                (state.scores.act7 / state.maxScores.act7) * 100,
+                (state.scores.act8 / state.maxScores.act8) * 100,
+                (state.scores.act9 / state.maxScores.act9) * 100
+            ];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Glossary (Act 4)', 'Comprehension (Act 5)', 'Vocabulary (Act 7)', 'Listen-Order (Act 8)', 'Listen-T/F (Act 9)'],
+                    datasets: [{
+                        label: 'Score Percentage',
+                        data: dataPcts,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Percentage (%)' }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function generateRecommendations(totalPct) {
+            const recList = document.getElementById('recommendations-list');
+            recList.innerHTML = "";
+            let recs = [];
+
+            // Targeted recommendations based on weak points
+            if ((state.scores.act4 / state.maxScores.act4) < 0.7) {
+                recs.push("Review glossary definitions by making flashcards for Victorian vocabulary.");
+            } else {
+                recs.push("Excellent work on the glossary! Try utilizing these words in your own writing.");
+            }
+
+            if ((state.scores.act5 / state.maxScores.act5) < 0.7) {
+                recs.push("For reading comprehension, try scanning the text for keywords before reading the whole paragraph.");
+            } else {
+                recs.push("Strong reading comprehension. Keep looking for nuance in character interactions.");
+            }
+
+            if ((state.scores.act7 / state.maxScores.act7) < 0.7) {
+                recs.push("Practice gap-fill exercises by reading sentences aloud to see if the word 'sounds' correct in context.");
+            }
+
+            if ((state.scores.act8 / state.maxScores.act8) < 0.7 || (state.scores.act9 / state.maxScores.act9) < 0.7) {
+                recs.push("Listening skills: Listen to English audiobooks or podcasts at 0.75x speed to catch specific details.");
+                recs.push("Before listening, read the questions carefully to predict the type of information you need to hear.");
+            } else {
+                recs.push("Great ear for detail! Challenge yourself by listening to diverse English accents.");
+            }
+
+            // Add general recommendations to reach exactly 8
+            const generalRecs = [
+                "Reflect on subjective questions (Activity 1 & 6) by discussing them with a partner to broaden perspectives.",
+                "To improve writing (Activity 10), read more literary journals to mimic complex sentence structures.",
+                "Always check your spelling and punctuation before submitting written assignments.",
+                "Create a reading schedule. Just like Phileas Fogg, precision and consistency yield the best results.",
+                "Review grammar rules regarding past tense verbs, which are heavily used in storytelling.",
+                "Maintain a personal vocabulary journal to note down new expressions encountered in English."
+            ];
+
+            let i = 0;
+            while(recs.length < 8 && i < generalRecs.length) {
+                recs.push(generalRecs[i]);
+                i++;
+            }
+
+            // Render
+            recs.slice(0,8).forEach(r => {
+                let li = document.createElement('li');
+                li.innerText = r;
+                recList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
